@@ -9,7 +9,7 @@ set jitter    "42";
 set dns_idle "8.8.8.8";
 set maxdns    "245";
 set useragent "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko";
-set spawnto "userinit.exe"
+set spawnto "userinit.exe";
 
 
 ###SMB Options###
@@ -57,7 +57,7 @@ http-get {
         header "Accept" "*/*";
         header "Host" "www.youtube.com";
         header "Referer" "http://gds.google.com/";
-        header ""
+        header "";
         header "Accept-Encoding" "gzip, deflate";
 
 
@@ -94,7 +94,7 @@ http-post {
         header "X-Requested-With" "XMLHttpRequest";
         header "Host" "www.youtube.com";
         header "Accept-Language" "en-US,en;q=0.5";
-        header "Connection: close"
+        header "Connection: close";
 
         parameter "sz" "160x600";
         parameter "oe" "oe=ISO-8859-1;";
