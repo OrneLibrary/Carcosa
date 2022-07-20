@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #
-#Edited by: @ChickySticky
+#Artfully Stolen and Edited by: @ChickySticky
 
 
 if [[ $EUID -ne 0 ]]; then
@@ -9,13 +9,17 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+echo -n "IMPORTANT: Ensure you have downloaded certs from rproxy and place in /home/cpt/certs"
+echo ""
 echo -n "NOTE:  Traffic profiles should only be added to https communications!"
 echo ""
 read -p "Enter your DNS (A) record for domain [ENTER]: " -r domain
 echo ""
 read -p "Enter your common password to be used [ENTER]: " -r password
 echo ""
-cslocation="/root/cobaltstrike"
+workingdir="/home/cpt"
+##check /root/cobaltstrike
+cslocation="$workingdir/cobaltstrike"
 read -e -i "$cslocation" -p "Enter the folder-path to cobaltstrike [ENTER]: " -r cobaltStrike
 cobaltStrike="${cobaltStrike:-$cslocation}"
 echo
@@ -24,7 +28,8 @@ domainPkcs="$domain.p12"
 domainStore="$domain.store"
 cobaltStrikeProfilePath="$cobaltStrike/httpsProfile"
 
-cd /etc/letsencrypt/live/$domain
+## Make Directory in Gold Image $workingdir/certs
+cd /home/cpt/certs/$domain
 echo '[Starting] Building PKCS12 .p12 cert.'
 openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out $domainPkcs -name $domain -passout pass:$password
 echo '[Success] Built $domainPkcs PKCS12 cert.'
