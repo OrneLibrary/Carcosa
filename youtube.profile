@@ -165,8 +165,8 @@ http-stager {
 
     output {
         print;
+        }
     }
-}
 
 }
  
