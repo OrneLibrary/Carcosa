@@ -50,7 +50,7 @@ set tcp_frame_header "";
 
 http-get {
 
-    set uri "/watch?v=ARf7LKo-hnk"; "/watch?v=i3SthACE63I&list=PLeNNKRLWxwoPHWxhwPs0ZOLB-N9FfeYoR&index=2"; "/watch?v=EEQUSuFBUxo&list=PLeNNKRLWxwoPHWxhwPs0ZOLB-N9FfeYoR&index=3"; "/watch?v=EEQUSuFBUxo&list=PLeNNKRLWxwoPHWxhwPs0ZOLB-N9FfeYoR&index=3"; "/watch?v=6gtpJH6Z91I&list=PLeNNKRLWxwoPHWxhwPs0ZOLB-N9FfeYoR&index=4"; "/watch?v=6gtpJH6Z91I&list=PLeNNKRLWxwoPHWxhwPs0ZOLB-N9FfeYoR&index=4"; "/watch?v=QmOf_mPeDxk&list=PLeNNKRLWxwoPHWxhwPs0ZOLB-N9FfeYoR&index=5"; 
+    set uri "/watch?v=ARf7LKo-hnk /watch?v=MfxuiQj9IbE&t=1010s /watch?v=dV3XX4eRHfU /watch?v=Y4M8mmy1wrU /watch?v=ebT-4Rea4jQ"; 
 
     client {
 
@@ -83,7 +83,7 @@ http-get {
 
 http-post {
     
-    set uri "/watch?v=gG-sK9zu6S8&t=8s"; "/watch?v=rH3SCcU3SsM&t=683s"; "/watch?v=FLbWd9uDv6k&t=634s"; '/watch?v=J5dBMKwoEVE'; "/watch?v=rLsrUd-gjx4";
+    set uri "/watch?v=gG-sK9zu6S8&t=8s /watch?v=rH3SCcU3SsM&t=683s /watch?v=FLbWd9uDv6k&t=634s /watch?v=J5dBMKwoEVE /watch?v=rLsrUd-gjx4";
     set verb "POST";
 
     client {
