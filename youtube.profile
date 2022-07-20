@@ -1,5 +1,4 @@
-#
-# YouTube browsing traffic profile
+# YouTube video profile
 # 
 # Author: @ChickySticky
 #
@@ -63,7 +62,7 @@ http-get {
         metadata {
             base64url;
             prepend "__cfduid=";
-            header "Cookie" "AGXVzq9TsOsr5VxnvrV6tp54aH8DIH6RG3ssV5tEuSSsrRMU6RDkZwH20OmQRPHIqAFZFfbDeXppcUfcI5jeYvPVd1VRFhaiTDKGR6OqNSW4qX3MfYVIzsalHKCgVV_4G9AojAqSx_pRKqA4S7dUvvc";
+            header  "AGXVzq9TsOsr5VxnvrV6tp54aH8DIH6RG3ssV5tEuSSsrRMU6RDkZwH20OmQRPHIqAFZFfbDeXppcUfcI5jeYvPVd1VRFhaiTDKGR6OqNSW4qX3MfYVIzsalHKCgVV_4G9AojAqSx_pRKqA4S7dUvvc";
         }
     }
 
@@ -73,7 +72,7 @@ http-get {
         header "X-Frame-Options" "SAMEORIGIN";
         header "X-XSS Protection" "1; mode=block; report=https://www.google.com/appserve/security-bugs/log/youtube";
         header "Content-Encoding" "gzip";
-        hearder "X-Content-Type-Options:" "nosniff";
+        header "X-Content-Type-Options:" "nosniff";
 
         output {
             print;
@@ -81,56 +80,55 @@ http-get {
     }
 }
 
-#http-post {
+http-post {
     
-    #set uri "/watch?v=gG-sK9zu6S8&t=8s";
-    #set verb "GET";
+    set uri "/watch?v=gG-sK9zu6S8&t=8s";
+    set verb "GET";
 
-    #client {
+    client {
 
-        #header "Accept" "*/*";
-        #header "Content-Type" "text/html,application";
-        #header "X-Requested-With" "XMLHttpRequest";
-        #header "Host" "www.youtube.com";
-        #header "Accept-Language" "en-US,en;q=0.5";
-        #header "Connection: close";
+        header "Accept" "*/*";
+        header "Content-Type" "text/html,application";
+        header "X-Requested-With" "XMLHttpRequest";
+        header "Host" "www.youtube.com";
+        header "Accept-Language" "en-US,en;q=0.5";
 
-        #parameter "sz" "160x600";
-        #parameter "oe" "oe=ISO-8859-1;";
+        parameter "sz" "160x600";
+        parameter "oe" "oe=ISO-8859-1;";
 
-        #id {
-            #parameter "sn";
-        #}
+        id {
+            parameter "sn";
+        }
 
-        #parameter "s" "3717";
-        #parameter "dc_ref" "http%3A%2F%2Fwww.youtube.com";
+        parameter "s" "3717";
+        parameter "dc_ref" "http%3A%2F%2Fwww.youtube.com";
 
-        #output {
-            #base64url;
-            #print;
-        #}
-    #}
+        output {
+            base64url;
+            print;
+        }
+    }
 
-    #server {
+    server {
 
-        #header "Strict-Transport-Security" "max-age=31536000";
-        #header "X-XSS-Protection" "1; mode=block; report=https://www.google.com/appserve/security-bugs/log/youtube";
-        #header "Content-Length" "0";
-        #header "Cache-Control" "no-cache";
-        #header "Expires" "Tue, 27 Apr 1969 19:44:06 EST";
-        #header "X-Frame-Options" "SAMEORIGIN";
-        #header "Content-Type" "video/x-flv";
-        #header "X-Content-Type-Options" "nosniff";
-        #header "Server" "YouTube Frontend Proxy";
-        #header "Alt-Svc" "quic=':443'; ma=2592000; v='41,39,38,37,35'";
-        #header "Connection" "close";
+        header "Strict-Transport-Security" "max-age=31536000";
+        header "X-XSS-Protection" "1; mode=block; report=https://www.google.com/appserve/security-bugs/log/youtube";
+        header "Content-Length" "0";
+        header "Cache-Control" "no-cache";
+        header "Expires" "Tue, 27 Apr 1969 19:44:06 EST";
+        header "X-Frame-Options" "SAMEORIGIN";
+        header "Content-Type" "video/x-flv";
+        header "X-Content-Type-Options" "nosniff";
+        header "Server" "YouTube Frontend Proxy";
+        header "Alt-Svc" "quic=':443'; ma=2592000; v='41,39,38,37,35'";
+        header "Connection" "close";
 
-        #output {
-            #netbios;
-            #print;
-        #}
-    #}
-#}
+        output {
+            netbios;
+            print;
+        }
+    }
+}
 
 #http-stager {
 
