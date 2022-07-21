@@ -32,14 +32,13 @@ domainPkcs="carcosa.p12"
 domainStore="carcosa.store"
 cobaltStrikeProfilePath="$cslocation/httpsProfile"
 
-## Make Directory in Gold Image $workingdir/certs
 cd /home/cpt/cobaltstrike/certs
 echo '[Starting] Building PKCS12 .p12 cert.'
 Password=$(openssl rand -hex 10 | base64)
 openssl pkcs12 -export -in fullchain*.pem -inkey privkey*.pem -out $domainPkcs -name "carcosa" -passout pass:$Password
 echo '[Success] Built $domainPkcs PKCS12 cert.'
 echo '[Starting] Building Java keystore via keytool.'
-keytool -importkeystore -deststorepass $Password -destkeypass $Password -destkeystore $domainStore -srckeystore $domainPkcs -srcstoretype PKCS12 -srcstorepass $Password -alias $domain
+keytool -importkeystore -deststorepass $Password -destkeypass $Password -destkeystore $domainStore -srckeystore $domainPkcs -srcstoretype PKCS12 -srcstorepass $Password -alias "carcosa"
 echo '[Success] Java keystore $domainStore built.'
 mkdir $cobaltStrikeProfilePath
 cp $domainStore $cobaltStrikeProfilePath
