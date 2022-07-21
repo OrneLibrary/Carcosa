@@ -5,21 +5,21 @@
 
 set sleeptime "1000";
 set jitter    "42";
-set dns-beacon.dns_idle "8.8.8.8";
-set dns-beacon.maxdns    "245";
+#set dns_idle "8.8.8.8";
+#set maxdns    "245";
 set useragent "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko";
-set post-ex.spawnto_x86 "userinit.exe";
-set post-ex.spawnto_x64 "userinit.exe";
+#set post-ex.spawnto_x86 "userinit.exe";
+#set post-ex.spawnto_x64 "userinit.exe";
 
 
 ###SMB Options###
-set pipename "ntsvcs##";
-set pipename_stager "scerpc##";
-set smb_frame_header "";
+##set pipename "ntsvcs##";
+##set pipename_stager "scerpc##";
+##set smb_frame_header "";
 
 ###TCP Options###
-set tcp_port "8000";
-set tcp_frame_header "";
+##set tcp_port "8000";
+##set tcp_frame_header "";
 
 ###SSH options###
 ##set ssh_banner "Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-1065-aws x86_64)";

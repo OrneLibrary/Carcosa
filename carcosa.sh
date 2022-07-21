@@ -1,8 +1,8 @@
-#!/bin/bash
 #
 #
 #Artfully Stolen and Edited by: @ChickySticky
-
+#
+#
 
 if [[ $EUID -ne 0 ]]; then
     echo "Please run this script as root" 1>&2
