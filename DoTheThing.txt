@@ -1,3 +1,4 @@
+Update target alias in pfsense
 Nginx Proxy Manager
     Go to SSL Certificates, 3 dots, build out certs and then download them
     Move to /home/cpt/cobaltstrike/certs on the C2, put certs in there

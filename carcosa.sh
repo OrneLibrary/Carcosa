@@ -1,7 +1,10 @@
 #
+#Strange is the night where black stars rise,
+#And strange moons circle through the skies
+#But stranger still is
+#Lost Carcosa
 #
-#Artfully Stolen and Edited by: @ChickySticky
-#
+#Written by: @ChickySticky
 #
 
 if [[ $EUID -ne 0 ]]; then
@@ -9,46 +12,50 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-echo -n "IMPORTANT: Ensure you have downloaded certs from rproxy and place in /home/cpt/certs"
-echo ""
-echo -n "NOTE:  Traffic profiles should only be added to https communications!"
-echo ""
-read -p "Enter your DNS (A) record for domain [ENTER]: " -r domain
-echo ""
-read -p "Enter your common password to be used [ENTER]: " -r password
-echo ""
+echo -n "IMPORTANT: Ensure you have downloaded certs from rproxy and place in /home/cpt/cobaltstrike/certs"
+read -p "Press [Enter] key to continue..."
+
+File=/home/cpt/cobaltstrike/certs/privkey*.pem
+ if test [[ -f $File ]]; then
+    echo "Good Job, You Added the Certs!!!"
+else    
+    echo "You Didn't Add the Certs Did You?"
+    exit 1
+fi 
+
 workingdir="/home/cpt"
 ##check /root/cobaltstrike
 cslocation="$workingdir/cobaltstrike"
-read -e -i "$cslocation" -p "Enter the folder-path to cobaltstrike [ENTER]: " -r cobaltStrike
-cobaltStrike="${cobaltStrike:-$cslocation}"
+##read -e -i "$cslocation" -p "Enter the folder-path to cobaltstrike [ENTER]: " -r cobaltStrike
+##cobaltStrike="${cobaltStrike:-$cslocation}"
 echo
 
-domainPkcs="$domain.p12"
-domainStore="$domain.store"
+domainPkcs="carcosa.p12"
+domainStore="carcosa.store"
 cobaltStrikeProfilePath="$cobaltStrike/httpsProfile"
 
 ## Make Directory in Gold Image $workingdir/certs
-cd /home/cpt/certs/$domain
+cd /home/cpt/cobaltstrike/certs
 echo '[Starting] Building PKCS12 .p12 cert.'
-openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out $domainPkcs -name $domain -passout pass:$password
+Password=$(openssl rand -hex 10 | base64)
+openssl pkcs12 -export -in fullchain*.pem -inkey privkey*.pem -out $domainPkcs -name "carcosa" -passout pass:$Password
 echo '[Success] Built $domainPkcs PKCS12 cert.'
 echo '[Starting] Building Java keystore via keytool.'
-keytool -importkeystore -deststorepass $password -destkeypass $password -destkeystore $domainStore -srckeystore $domainPkcs -srcstoretype PKCS12 -srcstorepass $password -alias $domain
+keytool -importkeystore -deststorepass $Password -destkeypass $Password -destkeystore $domainStore -srckeystore $domainPkcs -srcstoretype PKCS12 -srcstorepass $password -alias $domain
 echo '[Success] Java keystore $domainStore built.'
 mkdir $cobaltStrikeProfilePath
 cp $domainStore $cobaltStrikeProfilePath
 echo '[Success] Moved Java keystore to CS profile Folder.'
 cd $cobaltStrikeProfilePath
 echo '[Starting] Cloning into youtube.profile for testing.'
-wget https://github.com/OrneLibrary/Carcosa/blob/main/youtube.profile --no-check-certificate -O youtube.profile
-##wget https://github.com/OrneLibrary/Carcosa/blob/main/youtube.profile --no-check-certificate -O youtube.profile    
+wget https://raw.githubusercontent.com/OrneLibrary/Carcosa/main/youtube.profile --no-check-certificate -O youtube.profile
+##wget https://raw.githubusercontent.com/OrneLibrary/Carcosa/main/youtube.profile --no-check-certificate -O youtube.profile    
 echo '[Success] youtube.profile cloned.'
 echo '[Starting] Adding java keystore / password to youtube.profile.'
 echo " " >> youtube.profile
 echo 'https-certificate {' >> youtube.profile
 echo   set keystore \"$domainStore\"\; >> youtube.profile
-echo   set password \"$password\"\; >> youtube.profile
+echo   set password \"$Password\"\; >> youtube.profile
 echo '}' >> youtube.profile
 echo '[Success] youtube.profile updated with HTTPs settings.'
 ##echo '[Starting] Adding java keystore / password to oscp.profile.'
