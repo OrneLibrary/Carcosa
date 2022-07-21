@@ -16,7 +16,7 @@ echo -n "IMPORTANT: Ensure you have downloaded certs from rproxy and place in /h
 read -p "Press [Enter] key to continue..."
 
 File="/home/cpt/cobaltstrike/certs/privkey*.pem"
- if test [[ -f $File ]]; then
+ if [[ -f $File ]]; then
     echo "Good Job, You Added the Certs!!!"
 else    
     echo "You Didn't Add the Certs Did You?"
