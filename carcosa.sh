@@ -15,8 +15,8 @@ fi
 echo -n "IMPORTANT: Ensure you have downloaded certs from rproxy and place in /home/cpt/cobaltstrike/certs"
 read -p "Press [Enter] key to continue..."
 
-File="/home/cpt/cobaltstrike/certs/privkey1.pem"
- if [[ -f $File ]]; then
+
+if test -f /home/cpt/cobalstrike/certs/privkey*; then
     echo "Good Job, You Added the Certs!!!"
 else    
     echo "You Didn't Add the Certs Did You?"
@@ -26,13 +26,11 @@ fi
 workingdir="/home/cpt"
 ##check /root/cobaltstrike
 cslocation="$workingdir/cobaltstrike"
-##read -e -i "$cslocation" -p "Enter the folder-path to cobaltstrike [ENTER]: " -r cobaltStrike
-##cobaltStrike="${cobaltStrike:-$cslocation}"
 echo
 
 domainPkcs="carcosa.p12"
 domainStore="carcosa.store"
-cobaltStrikeProfilePath="$cobaltStrike/httpsProfile"
+cobaltStrikeProfilePath="$cslocation/httpsProfile"
 
 ## Make Directory in Gold Image $workingdir/certs
 cd /home/cpt/cobaltstrike/certs
@@ -41,7 +39,7 @@ Password=$(openssl rand -hex 10 | base64)
 openssl pkcs12 -export -in fullchain*.pem -inkey privkey*.pem -out $domainPkcs -name "carcosa" -passout pass:$Password
 echo '[Success] Built $domainPkcs PKCS12 cert.'
 echo '[Starting] Building Java keystore via keytool.'
-keytool -importkeystore -deststorepass $Password -destkeypass $Password -destkeystore $domainStore -srckeystore $domainPkcs -srcstoretype PKCS12 -srcstorepass $password -alias $domain
+keytool -importkeystore -deststorepass $Password -destkeypass $Password -destkeystore $domainStore -srckeystore $domainPkcs -srcstoretype PKCS12 -srcstorepass $Password -alias $domain
 echo '[Success] Java keystore $domainStore built.'
 mkdir $cobaltStrikeProfilePath
 cp $domainStore $cobaltStrikeProfilePath
