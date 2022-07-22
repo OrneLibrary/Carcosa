@@ -1,10 +1,11 @@
 Update target alias in pfsense
 Nginx Proxy Manager
     Go to SSL Certificates, 3 dots, build out certs and then download them
+    NOTE: Certs do not need to be rebuilt if expiration date is within mission window
     Move to /home/cpt/cobaltstrike/certs on the C2, put certs in there
     Run carcosa.sh 
         If it errors check the privkey.pem and fullchain.pem (if you remake the certs it adds a number)
-        check /home/cpt/cobalstrike/httpsProfile and ensure the .store is there
-        cat .profile and at the bottom you should see the certs listed
+        check /home/cpt/cobalstrike/httpsProfile and ensure the carcosa.store is there
+        cat youtube.profile and at the bottom you should see the certs listed
     run teamserver startup
           
