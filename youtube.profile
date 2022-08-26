@@ -50,13 +50,11 @@ set useragent "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Ge
 
 http-get {
 
-    set uri "/watch?v=ARf7LKo-hnk /watch?v=MfxuiQj9IbE&t=1010s /watch?v=dV3XX4eRHfU /watch?v=Y4M8mmy1wrU /watch?v=ebT-4Rea4jQ"; 
+    set uri "/watchvARf7LKo-hnk /watchvMfxuiQj9IbE&t=1010s /watchvdV3XX4eRHfU /watchvY4M8mmy1wrU /watchvebT-4Rea4jQ"; 
 
     client {
 
         header "Accept" "*/*";
-        header "Accept" "*=*";
-        header "Accept" "*?*";
         header "Host" "www.youtube.com";
         header "Referer" "http://gds.google.com/";
         header "Accept-Encoding" "gzip, deflate";
@@ -85,14 +83,12 @@ http-get {
 
 http-post {
     
-    set uri "/watch?v=gG-sK9zu6S8&t=8s /watch?v=rH3SCcU3SsM&t=683s /watch?v=FLbWd9uDv6k&t=634s /watch?v=J5dBMKwoEVE /watch?v=rLsrUd-gjx4";
+    set uri "/watchvgG-sK9zu6S8&t8s /watchvrH3SCcU3SsM&t683s /watchvFLbWd9uDv6k&t634s /watchvJ5dBMKwoEVE /watchvrLsrUd-gjx4";
     set verb "POST";
 
     client {
 
         header "Accept" "*/*";
-        header "Accept" "*=*";
-        header "Accept" "*?*";
         header "Content-Type" "text/html,application";
         header "X-Requested-With" "XMLHttpRequest";
         header "Host" "www.youtube.com";
@@ -144,8 +140,6 @@ http-post {
     #client {
 
         #header "Accept" "*/*";
-        #header "Accept" "*=*";
-        #header "Accept" "*?*";
         #header "Accept-Language" "en-US,en;q=0.5";
         #header "X-Goog-Visitor-Id" "CgtGbFYxTWlKTU96VQ==";
         #header "X-YouTube-Client-Name" "56";
