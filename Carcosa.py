@@ -51,8 +51,7 @@ def setup():
         print(f"[{cnt}] {fileName}")
     choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
 
-    print(fileList[choice])
-    return choice
+    return(fileList[choice])
         
 def inject(choice):
     ##Take Profile Choice and Inject SSL Cert into Profile
@@ -84,6 +83,7 @@ def inject(choice):
         \t set password "{password}";
     }}
     """
+    os.chdir(CSPROFILE)
     with open(choice, "a") as fp:
         fp.write(httpscert)
         fp.close()
