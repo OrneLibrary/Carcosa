@@ -81,8 +81,7 @@ def inject(choice):
     
     httpscert = f"""\nhttps-certificate {{
     set keystore "{DOMAINSTORE}";
-    set password "{password}";
-    }}
+    set password "{password}"; \n}}
     """
     os.chdir(CSPROFILE)
     with open(choice, "a") as fp:
