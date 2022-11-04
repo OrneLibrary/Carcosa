@@ -31,13 +31,13 @@ def setup():
     input ("Press Enter to Continue")
 
     ##Check If Certs and Profile Folders Exists
-    if not os.path.exists('/home/cpt/cobaltstrike/certs'):
+    if not os.path.exists(CERTS):
         sys.exit("I had never yet done such a thing in life, but now I felt a desire to mock. \nYou Must Create the Certs directory inside the Cobalt Strike Folder and Place Your SSL Certs into it.")
 
     print("Certs Are There!")
 
-    if not os.path.exists('/home/cpt/cobaltstrike/httpsProfiles'):
-        os.makedirs('/home/cpt/cobaltstrike/httpsProfiles')
+    if not os.path.exists(CSPROFILE):
+        os.makedirs(CSPROFILE)
 
     print("Creating httpsProfiles Directory in Cobalt Strike...")
 
@@ -50,6 +50,7 @@ def setup():
     for cnt, fileName in enumerate(fileList, 1):
         print(f"[{cnt}] {fileName}")
     choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
+    shutil.copyfile(f"{profiles}/{fileList[choice]}", f"{CSPROFILE}/{fileList[choice]}")
 
     return(fileList[choice])
         
