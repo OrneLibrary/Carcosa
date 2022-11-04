@@ -69,7 +69,7 @@ def inject(choice):
     
     ##Build Java Keystore and Add Password
     print("[Starting] Building Java keystore via keytool...")
-    subprocess.run (f"keytool -importkeystore -deststorepass {password} -destkeypass {password} -destkeystore {DOMAINSTORE} -srckeystore {DOMAINPKCS} -srcstoretype PKCS12 -srcstorepass {password} -alias \"carcosa\"", shell=True])
+    subprocess.run (f"keytool -importkeystore -deststorepass {password} -destkeypass {password} -destkeystore {DOMAINSTORE} -srckeystore {DOMAINPKCS} -srcstoretype PKCS12 -srcstorepass {password} -alias \"carcosa\"", shell=True)
     print("[Success] Java keystore DOMAINSTORE built")
 
     ##Move Stores into Profile Folder and Inject Cert then Output Combined Profile
