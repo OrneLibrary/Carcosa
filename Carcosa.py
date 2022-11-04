@@ -50,9 +50,10 @@ def setup():
     for cnt, fileName in enumerate(fileList, 1):
         print(f"[{cnt}] {fileName}")
     choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
-    shutil.copyfile(f"{profiles}/{fileList[choice]}", f"{CSPROFILE}/{fileList[choice]}")
+    profilename = fileList[choice]
+    shutil.copyfile(f"{profiles}/{profilename}", f"{CSPROFILE}/{profilename}")
 
-    return(fileList[choice])
+    return(profilename)
         
 def inject(choice):
     ##Take Profile Choice and Inject SSL Cert into Profile
