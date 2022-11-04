@@ -63,7 +63,7 @@ def inject(choice):
 
     ##Building OpenSSL Cert and PKCS12
     print("[Starting] Building PKCS12 .p12 cert...")
-    subprocess.run (["openssl", "pkcs12", "-export", "-in fullchain*.pem", "-inkey privkey*.pem", "-out " + DOMAINPKCS, "-name \"carcosa\"", "-passout pass: " + PASSWORD])
+    subprocess.run (["openssl", "pkcs12", "-export", "-in fullchain*.pem", "-inkey privkey*.pem", "-out " + DOMAINPKCS, "-name \"carcosa\"", "-passout pass: " + password])
     print("[Success] Built DOMAINPKCS PKCS12 CERT!!!")
     
     ##Build Java Keystore and Add Password
