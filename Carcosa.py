@@ -73,7 +73,7 @@ def inject(choice):
     print("[Success] Java keystore DOMAINSTORE built")
 
     ##Move Stores into Profile Folder and Inject Cert then Output Combined Profile
-    shutil.copyfile(DOMAINSTORE, CSPROFILE + "carcosa.store" )
+    shutil.copyfile(DOMAINSTORE, CSPROFILE)
 
     httpscert = f"""\n
     https-certificate {{
