@@ -7,19 +7,20 @@
 ##Written by: ChickySticky
 ##
 
-
-import base64
 import os
 import sys 
 import random
 import string
 import subprocess
+import shutil
 
-DOMAINPKCS = "carcosa.p12"
-DOMAINSTORE = "carcosa.store"
 WORKINGDIR = "/home/cpt"
 CSLOCATION = WORKINGDIR + "/cobaltstrike"
 CSPROFILE = CSLOCATION + "/httpsProfile"
+CERTS = CSLOCATION + "/certs"
+DOMAINPKCS = CERTS + "carcosa.p12"
+DOMAINSTORE = CERTS + "carcosa.store"
+CHOICE = int(input(f"Select Profile [1-{cnt}]: ")) -1
 
 def setup():
     ##Check Super User Status
@@ -31,9 +32,9 @@ def setup():
 
     ##Check If Certs and Profile Folders Exists
     if not os.path.exists('/home/cpt/cobaltstrike/certs'):
-        os.makedirs('/home/cpt/cobaltstrike/certs')
+        sys.exit("I had never yet done such a thing in life, but now I felt a desire to mock. \nYou Must Create the Certs directory inside the Cobalt Strike Folder and Place Your SSL Certs into it.")
 
-    print("Creating certs Directory in Cobalt Strike...")
+    print("Certs Are There!")
 
     if not os.path.exists('/home/cpt/cobaltstrike/httpsProfiles'):
         os.makedirs('/home/cpt/cobaltstrike/httpsProfiles')
@@ -49,19 +50,31 @@ def setup():
     for cnt, fileName in enumerate(fileList, 1):
         print(f"[{cnt}] {fileName}")
 
-    choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
-    print(fileList[choice])
+    print(fileList[CHOICE])
     print("Loading Selected Profile")
     
-
 def inject():
     ##Take Profile Choice and Inject SSL Cert into Profile
+    os.chdir(CERTS)
 
     #Randomize Password
     PASSWORD = ''.join(random.choice(string.printable) for i in range (16))
 
-    print("[Starting] Building PKCS12 .p12 cert.")
-    
+    ##Building OpenSSL Cert and PKCS12
+    print("[Starting] Building PKCS12 .p12 cert...")
     subprocess.run (["openssl", "pkcs12", "-export", "-in fullchain*.pem", "-inkey privkey*.pem", "-out " + DOMAINPKCS, "-name \"carcosa\"", "-passout pass: " + PASSWORD])
-
+    print("[Success] Built DOMAINPKCS PKCS12 CERT!!!")
     
+    ##Build Java Keystore and Add Password
+    print("[Starting] Building Java keystore via keytool...")
+    subprocess.run (["keytool", "-importkeystore", "-deststorepass" + PASSWORD, "-destkeypass" + PASSWORD, "destkeystore" + DOMAINSTORE, "-srckeystore" + DOMAINPKCS, "-srcstoretype", "PKCS12", "-srcstorepass", + PASSWORD, "-alias", "\"carcosa\""])
+    print("[Success] Java keystore DOMAINSTORE built")
+
+    ##Move Stores into Profile Folder and Inject Cert then Output Combined Profile
+    shutil.copyfile(DOMAINSTORE, CSPROFILE)
+    with open(CHOICE, "a") as usemeprofile:
+        usemeprofile.write("\"carcosa\"")
+        usemeprofile.close()
+    os.rename(usemeprofile, 'useme.profile')
+
+    return("Your Profile is Built, Please use the 'useme.profile' for Cobalt Strike")
