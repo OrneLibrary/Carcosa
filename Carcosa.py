@@ -51,7 +51,7 @@ def setup():
         print(f"[{cnt}] {fileName}")
     choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
     profilename = fileList[choice]
-    shutil.copyfile(f"{profiles}/{profilename}", f"{CSPROFILE}/{profilename}")
+    shutil.copyfile(f"/home/cpt/Carcosa/Profiles/{profilename}", f"{CSPROFILE}/{profilename}")
 
     return(profilename)
         
