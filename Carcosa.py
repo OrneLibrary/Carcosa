@@ -47,9 +47,9 @@ def setup():
     profiles = os.listdir('/home/cpt/Carcosa/Profiles')
     fileList = [name for name in profiles if name.endswith(".profile")]
     
-    choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
     for cnt, fileName in enumerate(fileList, 1):
         print(f"[{cnt}] {fileName}")
+    choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
 
     print(fileList[choice])
     return choice
