@@ -79,10 +79,9 @@ def inject(choice):
 
     ##Inject Cert then Output Combined Profile
     
-    httpscert = f"""\n
-    https-certificate {{
-        \t set keystore "{DOMAINSTORE}";
-        \t set password "{password}";
+    httpscert = f"""\nhttps-certificate {{
+    set keystore "{DOMAINSTORE}";
+    set password "{password}";
     }}
     """
     os.chdir(CSPROFILE)
