@@ -57,12 +57,15 @@ def setup():
 def inject(choice):
     ##Take Profile Choice and Inject SSL Cert into Profile
     os.chdir(CERTS)
+    if os.path.exists('/home/cpt/cobaltstrike/certs/carcosa.store'):
+        os.remove('/home/cpt/cobaltstrike/certs/carcosa.store')
+    if os.path.exists('/home/cpt/cobaltstrike/carcosa.p12'):
+        os.remove('/home/cpt/cobaltstrike/certs/carcosa.p12')
 
     #Randomize Password
     characters = string.digits + string.ascii_letters
     password = ''.join(random.choice(characters) for i in range (16))
-    
-
+        
     ##Building OpenSSL Cert and PKCS12
     print("[Starting] Building PKCS12 .p12 cert...")
     subprocess.run (f"openssl pkcs12 -export -in fullchain*.pem -inkey privkey*.pem -out {DOMAINPKCS} -name \"carcosa\" -passout pass:{password}", shell=True)
@@ -73,9 +76,8 @@ def inject(choice):
     subprocess.run (f"keytool -importkeystore -deststorepass {password} -destkeypass {password} -destkeystore {DOMAINSTORE} -srckeystore {DOMAINPKCS} -srcstoretype PKCS12 -srcstorepass {password} -alias \"carcosa\"", shell=True)
     print("[Success] Java keystore DOMAINSTORE built")
 
-    ##Move Stores into Profile Folder and Inject Cert then Output Combined Profile
-    shutil.copyfile(DOMAINSTORE, CSPROFILE)
-
+    ##Inject Cert then Output Combined Profile
+    
     httpscert = f"""\n
     https-certificate {{
         \t set keystore "{DOMAINSTORE}";
