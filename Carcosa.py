@@ -16,11 +16,11 @@ import shutil
 
 WORKINGDIR = "/home/cpt"
 CSLOCATION = WORKINGDIR + "/cobaltstrike"
-CSPROFILE = CSLOCATION + "/httpsProfile"
-CERTS = CSLOCATION + "/certs"
+CSPROFILE = CSLOCATION + "/httpsProfile/"
+CERTS = CSLOCATION + "/certs/"
 DOMAINPKCS = CERTS + "carcosa.p12"
 DOMAINSTORE = CERTS + "carcosa.store"
-CHOICE = int(input(f"Select Profile [1-{cnt}]: ")) -1
+
 
 def setup():
     ##Check Super User Status
@@ -46,19 +46,20 @@ def setup():
 
     profiles = os.listdir('/home/cpt/Carcosa/Profiles')
     fileList = [name for name in profiles if name.endswith(".profile")]
-
+    
+    choice = int(input(f"Select Profile [1-{cnt}]: ")) -1
     for cnt, fileName in enumerate(fileList, 1):
         print(f"[{cnt}] {fileName}")
 
-    print(fileList[CHOICE])
-    print("Loading Selected Profile")
-    
-def inject():
+    print(fileList[choice])
+    return choice
+        
+def inject(choice):
     ##Take Profile Choice and Inject SSL Cert into Profile
     os.chdir(CERTS)
 
     #Randomize Password
-    PASSWORD = ''.join(random.choice(string.printable) for i in range (16))
+    password = ''.join(random.choice(string.printable) for i in range (16))
 
     ##Building OpenSSL Cert and PKCS12
     print("[Starting] Building PKCS12 .p12 cert...")
@@ -67,14 +68,28 @@ def inject():
     
     ##Build Java Keystore and Add Password
     print("[Starting] Building Java keystore via keytool...")
-    subprocess.run (["keytool", "-importkeystore", "-deststorepass" + PASSWORD, "-destkeypass" + PASSWORD, "destkeystore" + DOMAINSTORE, "-srckeystore" + DOMAINPKCS, "-srcstoretype", "PKCS12", "-srcstorepass", + PASSWORD, "-alias", "\"carcosa\""])
+    subprocess.run (["keytool", "-importkeystore", "-deststorepass" + password, "-destkeypass" + password, "destkeystore" + DOMAINSTORE, "-srckeystore" + DOMAINPKCS, "-srcstoretype", "PKCS12", "-srcstorepass", + password, "-alias", "\"carcosa\""])
     print("[Success] Java keystore DOMAINSTORE built")
 
     ##Move Stores into Profile Folder and Inject Cert then Output Combined Profile
     shutil.copyfile(DOMAINSTORE, CSPROFILE)
-    with open(CHOICE, "a") as usemeprofile:
-        usemeprofile.write("\"carcosa\"")
-        usemeprofile.close()
-    os.rename(usemeprofile, 'useme.profile')
 
+    httpscert = f"""\n
+    https-certificate {{
+        \t set keystore "{DOMAINSTORE}";
+        \t set password "{password}";
+    }
+    """
+    with open(choice, "a") as fp:
+        fp.write(httpscert)
+        fp.close()
+    
     return("Your Profile is Built, Please use the 'useme.profile' for Cobalt Strike")
+
+def main():
+    choice = setup()
+    print("Loading Selected Profile")
+    inject(choice)
+
+if __name__ == "__main__":
+    main()
