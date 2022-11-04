@@ -59,7 +59,8 @@ def inject(choice):
     os.chdir(CERTS)
 
     #Randomize Password
-    password = ''.join(random.choice(string.printable) for i in range (16))
+    characters = string.digits + string.ascii_letters
+    password = ''.join(random.choice(characters) for i in range (16))
 
     ##Building OpenSSL Cert and PKCS12
     print("[Starting] Building PKCS12 .p12 cert...")
