@@ -78,7 +78,7 @@ def inject(choice):
     https-certificate {{
         \t set keystore "{DOMAINSTORE}";
         \t set password "{password}";
-    }
+    }}
     """
     with open(choice, "a") as fp:
         fp.write(httpscert)
