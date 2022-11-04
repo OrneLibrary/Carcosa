@@ -59,9 +59,9 @@ def inject(choice):
     os.chdir(CERTS)
 
     #Randomize Password
-    ##characters = string.digits + string.ascii_letters
-    ##password = ''.join(random.choice(characters) for i in range (16))
-    password = "secretpassword"
+    characters = string.digits + string.ascii_letters
+    password = ''.join(random.choice(characters) for i in range (16))
+    
 
     ##Building OpenSSL Cert and PKCS12
     print("[Starting] Building PKCS12 .p12 cert...")
@@ -70,7 +70,7 @@ def inject(choice):
     
     ##Build Java Keystore and Add Password
     print("[Starting] Building Java keystore via keytool...")
-    subprocess.run (f"keytool -importkeystore -deststorepass {password} -destkeypass {password} -destkeystore {DOMAINSTORE} -srckeystore {DOMAINPKCS} -srcstoretype PKCS12 -srcstorepass {password} -alias \"carcosa\"", shell=True)
+    subprocess.run (f"keytool -importkeystore -deststorepass{password} -destkeypass{password} -destkeystore {DOMAINSTORE} -srckeystore {DOMAINPKCS} -srcstoretype PKCS12 -srcstorepass{password} -alias \"carcosa\"", shell=True)
     print("[Success] Java keystore DOMAINSTORE built")
 
     ##Move Stores into Profile Folder and Inject Cert then Output Combined Profile
