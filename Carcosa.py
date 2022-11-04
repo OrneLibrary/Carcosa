@@ -69,7 +69,7 @@ def inject(choice):
     
     ##Build Java Keystore and Add Password
     print("[Starting] Building Java keystore via keytool...")
-    subprocess.run (["keytool", "-importkeystore", "-deststorepass", password, "-destkeypass", password, "-destkeystore", DOMAINSTORE, "-srckeystore", DOMAINPKCS, "-srcstoretype", "PKCS12", "-srcstorepass", password, "-alias", "carcosa"])
+    subprocess.run (f"keytool -importkeystore -deststorepass {password} -destkeypass {password} -destkeystore {DOMAINSTORE} -srckeystore {DOMAINPKCS} -srcstoretype PKCS12 -srcstorepass {password} -alias \"carcosa\"", shell=True])
     print("[Success] Java keystore DOMAINSTORE built")
 
     ##Move Stores into Profile Folder and Inject Cert then Output Combined Profile
@@ -85,7 +85,7 @@ def inject(choice):
         fp.write(httpscert)
         fp.close()
     
-    return("Your Profile is Built, Please use the 'useme.profile' for Cobalt Strike")
+    return("Your Profile is Built, Please use the Profile You Selected for Cobalt Strike")
 
 def main():
     choice = setup()
