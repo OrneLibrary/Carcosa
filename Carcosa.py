@@ -16,7 +16,7 @@ import shutil
 
 WORKINGDIR = "/home/cpt"
 CSLOCATION = WORKINGDIR + "/cobaltstrike"
-CSPROFILE = CSLOCATION + "/httpsProfile/"
+CSPROFILE = CSLOCATION + "/httpsProfiles/"
 CERTS = CSLOCATION + "/certs/"
 DOMAINPKCS = CERTS + "carcosa.p12"
 DOMAINSTORE = CERTS + "carcosa.store"
