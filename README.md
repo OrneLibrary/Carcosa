@@ -1,4 +1,4 @@
-#Carcosa
+Carcosa
 
 Updated Carcosa Should be on the gold image. If you'd like to be sure it's the most up-to-date version of Carcosa
 please `cd` into the Carcosa folder and type `git clone` 
