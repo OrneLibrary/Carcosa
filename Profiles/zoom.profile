@@ -34,8 +34,8 @@ dns-beacon {
 }
 
 ###SMB options###
-set pipename "ntsvcs##";
-set pipename_stager "scerpc##";
+set pipename "epmapper##";
+set pipename_stager "atsvc##";
 set smb_frame_header "";
 
 ###TCP options###
@@ -60,15 +60,15 @@ set tasks_dns_proxy_max_size "71680";
 #    set password "";
 #}
 
-https-certificate {
-    set C "US";
-    set CN "whatever.com";
-    set L "California";
-    set O "whatever LLC.";
-    set OU "local.org";
-    set ST "CA";
-    set validity "365";
-}
+##https-certificate {
+    ##set C "US";
+    ##set CN "whatever.com";
+    ##set L "California";
+    ##set O "whatever LLC.";
+    ##set OU "local.org";
+    ##set ST "CA";
+    ##set validity "365";
+##}
 
 #code-signer {
     #set keystore "your_keystore.jks";
